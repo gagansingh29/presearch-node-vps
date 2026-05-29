@@ -2,101 +2,219 @@
 
 ## Overview
 
-This project documents my experience running and maintaining multiple Dockerized Presearch Nodes across different Ubuntu-based VPS providers over a long period.
+This project documents my experience deploying, monitoring, and maintaining Dockerized Presearch Nodes across multiple Ubuntu-based VPS providers over a long period of time.
 
-The nodes run inside Docker containers using the official Presearch image, with persistent storage and automatic restart configurations to ensure high availability and reliability.
+The nodes run inside Docker containers using the official Presearch image, with persistent storage and automatic restart configurations to ensure service reliability and high availability.
 
-This setup demonstrates real-world experience in managing distributed services across multiple cloud environments.
+This project demonstrates practical experience with:
+
+* Linux server administration
+* Docker container management
+* Cloud VPS environments
+* Long-term service uptime
+* Infrastructure monitoring and maintenance
+* Remote server management over SSH
 
 ---
 
-## Skills Demonstrated
+# Technologies Used
+
+* Ubuntu Server
+* Docker
+* Oracle Cloud Infrastructure (OCI)
+* Racknerd VPS
+* Linux CLI / Bash
+* SSH Remote Administration
+* htop
+* Docker Logs & Monitoring Tools
+
+---
+
+# Architecture
+
+```text
+Internet
+   │
+   ▼
+Ubuntu VPS (Oracle Cloud / Racknerd)
+   │
+   ▼
+Docker Engine
+   │
+   ▼
+Presearch Node Container
+   │
+   ▼
+Persistent Docker Volume
+```
+
+---
+
+# VPS Providers Used
+
+* Oracle Cloud Infrastructure (OCI)
+* Racknerd VPS
+
+---
+
+# Environment Details
+
+| Component         | Details                         |
+| ----------------- | ------------------------------- |
+| Operating System  | Ubuntu Server                   |
+| Container Runtime | Docker                          |
+| Service           | Presearch Node                  |
+| Access Method     | SSH                             |
+| Monitoring Tools  | htop, docker stats, docker logs |
+
+---
+
+# Skills Demonstrated
 
 * Linux (Ubuntu) server administration
 * Docker container deployment and lifecycle management
 * Managing multiple VPS environments
 * Persistent storage using Docker volumes
-* Networking and port configuration
-* Long-term uptime monitoring and troubleshooting
+* Networking and container configuration
+* Long-term uptime monitoring
+* Troubleshooting Docker containers and Linux services
 * Running and maintaining distributed, production-like services
+* Remote infrastructure management using SSH
 
 ---
 
-## Architecture
-
-### VPS Providers Used
-
-* Oracle Corporation (Oracle Cloud Infrastructure)
-* Racknerd VPS
-
-### Environment Details
-
-* OS: Ubuntu
-* Container Runtime: Docker
-* Service: Presearch Node (Docker container)
-
-### Deployment Approach
+# Deployment Approach
 
 * Multiple nodes deployed across different VPS providers
-* Each node runs in an isolated Docker container
+* Each node runs inside an isolated Docker container
 * Persistent storage configured using Docker volumes
-* Automatic restart enabled for reliability (`--restart=unless-stopped`)
+* Automatic restart enabled using Docker restart policies
+* Services monitored periodically for uptime and stability
 
 ---
 
-## Docker Setup
+# Quick Deployment
 
-Commands used to setup and run a node:
+Clone the repository:
 
 ```bash
-sudo apt update ; sudo apt upgrade -y ; sudo apt install docker.io 
+git clone https://github.com/gagansingh29/presearch-node-vps.git
+cd presearch-node-vps
+```
 
-sudo usermod -aG docker $USER 
+Make the deployment script executable:
 
-docker stop presearch-node ; docker rm presearch-node ; docker stop presearch-auto-updater ; docker rm presearch-auto-updater ; docker run -d --name presearch-auto-updater --restart=unless-stopped -v /var/run/docker.sock:/var/run/docker.sock presearch/auto-updater --cleanup --interval 900 presearch-auto-updater presearch-node ; docker pull presearch/node ; docker run -dt --name presearch-node --restart=unless-stopped -v presearch-node-storage:/app/node -e REGISTRATION_CODE=$YOUR_REGISTRATION_CODE_HERE presearch/node ; docker logs -f presearch-node
+```bash
+chmod +x setup.sh
+```
+
+Run the deployment script:
+
+```bash
+./setup.sh
+```
+
+The full deployment commands and Docker configuration are available in `setup.sh`.
+
+---
+
+# Monitoring & Maintenance
+
+Operational monitoring and maintenance tasks included:
+
+* Monitoring container uptime and health
+* Checking Docker container status using `docker ps`
+* Monitoring system resources using `htop`
+* Tracking container resource usage using `docker stats`
+* Reviewing container logs for troubleshooting
+* Performing periodic maintenance and updates
+* Managing long-running VPS instances remotely over SSH
+
+---
+
+# Operational Highlights
+
+* Containers configured with automatic restart policies
+* Long-term stable Docker container operation
+* Ubuntu VPS uptime exceeding 400+ days on some instances
+* Resource monitoring performed using `htop` and `docker stats`
+* Distributed deployment across multiple VPS providers
+
+---
+
+# Example Commands Used
+
+Check running containers:
+
+```bash
+docker ps
+```
+
+Monitor resource usage:
+
+```bash
+docker stats
+```
+
+View logs:
+
+```bash
+docker logs presearch-node
+```
+
+System monitoring:
+
+```bash
+htop
 ```
 
 ---
 
-## Key Configurations
+# Screenshots
 
-* `--restart=unless-stopped` ensures containers restart automatically after reboot or failure
-* Docker volumes used for persistent node data
-* Environment variables used for node registration
-* Deployment across multiple VPS providers improves redundancy and reliability
+Screenshots of:
 
----
+* Running Docker containers
+* VPS terminal sessions
+* Docker monitoring tools
+* System uptime and resource monitoring
 
-## Monitoring & Maintenance
-
-* Checked running containers:
-
-  ```bash
-  docker ps
-  ```
-* Viewed logs:
-
-  ```bash
-  docker logs presearch-node
-  ```
-* Monitored uptime and container health across multiple servers
-* Performed periodic maintenance and troubleshooting when required
+are available in the `screenshots/` folder.
 
 ---
 
-## Screenshots
+# What I Learned
 
-Screenshots of running containers, logs, and VPS terminals are available in the `screenshots/` folder.
+* Managing long-running Linux servers remotely over SSH
+* Deploying and maintaining Dockerized services
+* Monitoring system resources and container health
+* Configuring persistent storage using Docker volumes
+* Troubleshooting service reliability and uptime issues
+* Understanding practical cloud infrastructure operations
+* Working with real-world VPS environments
 
 ---
 
-## Notes
+# Security Notice
 
-* Sensitive information such as registration codes has been removed
-* This repository focuses on infrastructure, deployment, and system management aspects
+Sensitive information such as:
+
+* Registration codes
+* Public IP addresses
+* SSH key information
+* Server identifiers
+
+have been removed or redacted before publishing.
 
 ---
 
-## Outcome
+# Outcome
 
-Successfully deployed and maintained multiple Dockerized services across different VPS providers, demonstrating practical skills in cloud infrastructure, containerization, and system reliability.
+Successfully deployed and maintained multiple Dockerized services across different VPS providers, demonstrating practical skills in:
+
+* Cloud infrastructure
+* Linux server administration
+* Docker containerization
+* System monitoring
+* Infrastructure reliability
+* Remote server management
